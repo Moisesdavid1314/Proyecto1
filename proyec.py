@@ -142,7 +142,7 @@ while True:
     clases = {'aventurero': [['vida', 95], ['suerte', 25], ['defensa', 8]], 'saqueador': [['vida', 55], [
         'suerte', 45], ['defensa', 10]], 'maton': [['vida', 130], ['suerte', 12], ['defensa', 5]]}
     eleccion = input(
-        'que clase deseas elegir \naventurero\nsaqueador\nmaton\n'.title())
+        'que clase deseas elegir \naventurero\nsaqueador\nmaton\n '.title())
     tm.sleep(2)
     if eleccion in clases:
         for t in clases[eleccion]:
@@ -164,7 +164,7 @@ while True:
 
 
 personaje = Humano(clase[0][1], 8, clase[1][1], clase[2][1], {})
-ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado')
+ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado ')
 if ar == '1':
     personaje.inventario(arma={'cuchilla oxidada': 15})
     tm.sleep(2)
@@ -181,7 +181,7 @@ else:
 
 rondas = 0
 pr = 0
-sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n:')
+sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n: ')
 if sitio == 'fosa':
     while True:
         print('ok estas caminando')
@@ -190,7 +190,7 @@ if sitio == 'fosa':
         if opcion1 == 1:
             while True:
                 print('encontraste un cofre')
-                e1 = input('deseas abrirlo')
+                e1 = input('deseas abrirlo? ')
                 if e1 == 'si':
                     if suertes(personaje.suerte) == 'suerte':
                         print('Bien tuviste un golpe de suerte ')
@@ -213,7 +213,7 @@ if sitio == 'fosa':
             while True:
                 if pr % 2 == 0:
                     pelea = input(
-                        'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n')
+                        'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n ')
                     if pelea == '1':
                         at = personaje.atacar()
                         vagur.golpe_ataque(at)
