@@ -218,6 +218,9 @@ if sitio == 'fosa':
                         at = personaje.atacar()
                         vagur.golpe_ataque(at)
                         print(f'quitaste un total de {at}')
+                        if vagur.salud<1:
+                            print('ganaste')
+                            break
                         pr += 1
                     elif pelea == '2':
                         personaje.ver_stats()
@@ -229,9 +232,6 @@ if sitio == 'fosa':
                 else:
                     at_enemigo = vagur.ataque()
                     r = personaje.golpe(at_enemigo)
-                    if r < 1:
-                        print('ganaste la batalla campeon')
-                        break
                     personaje.salud()
                     pr += 1
                     rondas += 1
