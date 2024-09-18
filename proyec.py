@@ -184,7 +184,7 @@ pr = 0
 sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n')
 if sitio == 'fosa':
     while True:
-        print('ok estas caminando')
+        print('Estas caminando')
         tm.sleep(5)
         opcion1 = rd.randrange(1, 4)
         if opcion1 == 1:
