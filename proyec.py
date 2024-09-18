@@ -3,9 +3,9 @@ import time as tm
 
 
 class enemigos:
-    def __init__(self, salud, dano, armor, nombre):
+    def __init__(self, salud, daño, armor, nombre):
         self.vida = salud
-        self.atack = dano
+        self.atack = daño
         self.armadura = armor
         self.nombre = nombre
 
@@ -14,8 +14,8 @@ class enemigos:
         tm.sleep(1.5)
         return self.atack
 
-    def golpe_ataque(self, dano):
-        self.vida -= dano
+    def golpe_ataque(self, daño):
+        self.vida -= daño
         self.vida += self.armadura
         print(f' le quedan {self.vida} de vida  a {self.nombre}')
         tm.sleep(1.5)
@@ -113,7 +113,7 @@ class Humano:
             raise print('perdiste')
         golpe -= self.defensa
         self.vida -= golpe
-        print(f'te hicieron {golpe} de dano')
+        print(f'te hicieron {golpe} de daño')
         return golpe
 
 
