@@ -181,7 +181,7 @@ else:
 
 rondas = 0
 pr = 0
-sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n: ')
+sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n')
 if sitio == 'fosa':
     while True:
         print('ok estas caminando')
