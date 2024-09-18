@@ -142,7 +142,7 @@ while True:
     clases = {'aventurero': [['vida', 95], ['suerte', 25], ['defensa', 8]], 'saqueador': [['vida', 55], [
         'suerte', 45], ['defensa', 10]], 'maton': [['vida', 130], ['suerte', 12], ['defensa', 5]]}
     eleccion = input(
-        'que clase deseas elegir \naventurero\nsaqueador\nmaton\n '.title())
+        'que clase deseas elegir \naventurero\nsaqueador\nmaton\n'.title())
     tm.sleep(2)
     if eleccion in clases:
         for t in clases[eleccion]:
