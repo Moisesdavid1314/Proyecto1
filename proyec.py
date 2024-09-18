@@ -209,7 +209,7 @@ if sitio == 'fosa':
                     break
 
         elif opcion1 == 2:
-            print('que te encontraste con un vagur')
+            print('Te encontraste con un vagur')
             while True:
                 if pr % 2 == 0:
                     pelea = input(
