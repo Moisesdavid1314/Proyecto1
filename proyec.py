@@ -164,7 +164,7 @@ while True:
 
 
 personaje = Humano(clase[0][1], 8, clase[1][1], clase[2][1], {})
-ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado ')
+ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado\n')
 if ar == '1':
     personaje.inventario(arma={'cuchilla oxidada': 15})
     tm.sleep(2)
