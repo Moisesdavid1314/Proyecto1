@@ -76,7 +76,7 @@ class Humano:
     def ver_stats(self):
         print('STADISTICAS')
         print(
-            f'************\nVida:{self.vida}\nAtaque:{self.ataque}\nSuerte:{self.suerte}\nDefensa{self.defensa}')
+            f'************\nVida: {self.vida}\nAtaque: {self.ataque}\nSuerte: {self.suerte}\nDefensa: {self.defensa}')
         print('**************')
         tm.sleep(5.5)
 
@@ -92,7 +92,7 @@ class Humano:
     def inventario(self, arma=None):
         if arma:
             self.mochila.update(arma)
-            print(f'ok obtuviste {self.mochila}')
+            print(f'Obtuviste {self.mochila}')
             tm.sleep(2)
         else:
             print(self.mochila)
@@ -161,7 +161,7 @@ while True:
         e = input(f'estas seguro que deseas llamarlo {nombre}: ')
         if e == 'si':
             nombre_personaje = nombre
-            print('bien ahora empieza tu LEYENDA')
+            print('Empezaste tu LEYENDA')
             tm.sleep(3)
             break
         else:
@@ -177,7 +177,7 @@ while True:
     clases = {'aventurero': [['vida', 95], ['suerte', 25], ['defensa', 8]], 'saqueador': [['vida', 55], [
         'suerte', 45], ['defensa', 10]], 'maton': [['vida', 130], ['suerte', 12], ['defensa', 5]]}
     eleccion = input(
-        'que clase deseas elegir \naventurero\nsaqueador\nmaton\n'.title())
+        'que clase deseas elegir \naventurero\nsaqueador\nluchador\n'.title())
     tm.sleep(2)
     if eleccion in clases:
         for t in clases[eleccion]:
@@ -216,7 +216,7 @@ else:
 
 rondas = 0
 pr = 0
-sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n')
+sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n'.title())
 if sitio == 'fosa':
     while True:
         print('Estas caminando')
@@ -260,7 +260,7 @@ if sitio == 'fosa':
             while True:
                 if pr % 2 == 0:
                     pelea = input(
-                        'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad ')
+                        'Empieza el ataque, que elijes?\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n')
                     if pelea == '1':
                         at = personaje.atacar()
                         tm.sleep(1)
