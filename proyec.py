@@ -147,7 +147,7 @@ while True:
     if eleccion in clases:
         for t in clases[eleccion]:
             print(t)
-        ele = input('estas seguro de tu eleccion')
+        ele = input('estas seguro de tu eleccion? ')
         if ele == 'si':
             tm.sleep(3)
             print('ok buena eleccion')
