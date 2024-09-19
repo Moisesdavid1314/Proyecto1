@@ -47,8 +47,13 @@ class enemigos:
             f'Vida:{self.vida}\nAtaque:{self.atack}\nArmadura:{self.armadura}\nNombre:{self.nombre}\n')
         tm.sleep(5.5)
 
-    def regenerar(self):
-        self.vida += 95
+    def regenerar(self,n=None):
+        if n=='Vagur macizo':
+            self.vida=95
+        elif n=='titan macizo con pampel cagao de lo adove':
+            self.vida=110
+            self.atack=35
+
 
 
 titan = enemigos(
@@ -313,6 +318,7 @@ if sitio == 'fosa':
                     break
 
         elif opcion1 == 2:
+            vagur.regenerar('Vagur macizo')
             print('Te encontraste con un vagur')
             while True:
                 if pr % 2 == 0:
@@ -365,6 +371,7 @@ if sitio == 'fosa':
                     print('te chupo un gusarapo')
                     personaje.estados({'mordedura verde': 5})
             else:
+                titan.regenerar('titan macizo con pampel cagao de lo adove')
                 while True:
                     if pr % 2 == 0:
                         print(f'te encontraste con {titan.nombre}')
