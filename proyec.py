@@ -25,7 +25,7 @@ class enemigos:
             return 'combate'
 
     def rondas(self, ronda):
-        if ronda > 3:
+        if ronda == 3:
             d = suertes(50)
             if d == 'suerte':
                 print(
