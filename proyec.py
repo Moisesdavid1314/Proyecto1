@@ -34,11 +34,13 @@ class enemigos:
                 tm.sleep(3)
                 print(f'su vida ahora aumenta a {self.vida}')
                 tm.sleep(2.5)
-        elif ronda == -95:
-            print(
-                'EL TITAN SE QUILLA Y DA UN GOLPE DEL DIABLO QUE SE TE HUNDE EL ANO PLAAAAA')
-            print(F'SU ATAQUE AUMENTA A {self.atack*1.5}')
-            self.atack *= 1.5
+        if self.nombre == 'titan macizo con pampel cagao de lo adove' and ronda > 4:
+            t = suertes(55)
+            if t == 'suerte':
+                print(
+                    'EL TITAN SE QUILLA Y DA UN GOLPE DEL DIABLO QUE SE TE HUNDE EL ANO PLAAAAA')
+                print(F'SU ATAQUE AUMENTA A {self.atack*1.5}')
+                self.atack *= 1.5
 
     def ver_estadisticas_enemigas(self):
         print(
@@ -65,18 +67,41 @@ def suertes(x):
 
 
 class Humano:
-    def __init__(self, vida, ataque, suerte, defensa, mochila, habilidad):
+    def __init__(self, vida, ataque, suerte, defensa, mochila, habilidad, estados, experiencia, sani):
         self.vida = vida
         self.ataque = ataque
         self.suerte = suerte
         self.defensa = defensa
         self.mochila = mochila
         self.habilidad = habilidad
+        self.estado = estados
+        self.exp = experiencia
+        self.sanidad = sani
+
+    def subir_nivel(self):
+        while True:
+            if self.exp > 99:
+                nivel = input(
+                    'que estadisticas deseas subir\n1.Suerte + 5\n2.Armadura + 1')
+                tm.sleep(2)
+                if nivel == '1':
+                    self.suerte += 5
+                    self.exp -= 100
+                    print(f'ahora tienes {self.suerte} de suerte')
+                elif nivel == '2':
+                    self.defensa += 1
+                    self.exp -= 100
+                    print(f'ahora tienes {self.defensa} de defensa')
+            else:
+                print(
+                    f'no tienes suficiente experiencia para subir nivel nesesitas un minimo de 100 tienes {self.exp}')
+                tm.sleep(2)
+                break
 
     def ver_stats(self):
         print('STADISTICAS')
         print(
-            f'************\nVida: {self.vida}\nAtaque: {self.ataque}\nSuerte: {self.suerte}\nDefensa: {self.defensa}')
+            f'************\nVida:{self.vida}\nAtaque:{self.ataque}\nSuerte:{self.suerte}\nDefensa{self.defensa}\nExperiencia{self.exp}\nEstados{self.estado}')
         print('**************')
         tm.sleep(5.5)
 
@@ -92,7 +117,7 @@ class Humano:
     def inventario(self, arma=None):
         if arma:
             self.mochila.update(arma)
-            print(f'Obtuviste {self.mochila}')
+            print(f'ok obtuviste {self.mochila}')
             tm.sleep(2)
         else:
             print(self.mochila)
@@ -133,23 +158,53 @@ class Humano:
                 print(f'habilidad aprendida {name} ')
                 break
             else:
-                elec = input(f'que habilidad deseas utilizar')
-                if elec in self.habilidad:
-                    for t in self.habilidad[elec]:
-                        if t[0] == 'O':
-                            print(t)
-                            tm.sleep(4)
-                        elif t == 'curar':
-                            personaje.curar(int(self.habilidad[elec][2]))
-                else:
-                    print(f'la habilidad {elec} no existe')
-                    tm.sleep(2)
+                elec = input(
+                    f'1.habilidad que deseas utilizar\n2.ver habilidades\n3.volver\n')
+                if elec == '2':
+                    for x in self.habilidad:
+                        print(x)
+                if elec == '3':
+                    print('ok voveras')
+                    tm.sleep(3)
                     break
+                if elec == '1':
+                    elec2 = input('que habilidad deseas utilizar')
+                    if elec2 in self.habilidad:
+                        for t in self.habilidad[elec2]:
+                            if t[0] == 'O':
+                                print(t)
+                                tm.sleep(4)
+                            elif t == 'curar':
+                                personaje.curar(int(self.habilidad[elec2][2]))
+
+                    else:
+                        print(f'la habilidad {elec2} no existe')
+                        tm.sleep(2)
+                        break
         return print('\n')
 
     def curar(self, x):
         self.vida += x
         print(f'te curaste {x} de vida')
+
+    def estados(self, est=None):
+        if est:
+            self.estado.update(est)
+            for t in est:
+                print(f'contuviste {t}')
+                tm.sleep(2)
+        else:
+            c = 0
+            for s, p in self.estado.items():
+                print(f'{s} te infligio un total de {p} daño')
+                self.vida -= p
+                tm.sleep(2)
+            self.sanidad += 1
+            if c == 3:
+                print(self.estado.popitem())
+                print('ha desaparecido')
+                tm.sleep(2)
+                c -= 3
 
 
 nombre_personaje = None
@@ -161,7 +216,7 @@ while True:
         e = input(f'estas seguro que deseas llamarlo {nombre}: ')
         if e == 'si':
             nombre_personaje = nombre
-            print('Empezaste tu LEYENDA')
+            print('bien ahora empieza tu LEYENDA')
             tm.sleep(3)
             break
         else:
@@ -177,7 +232,7 @@ while True:
     clases = {'aventurero': [['vida', 95], ['suerte', 25], ['defensa', 8]], 'saqueador': [['vida', 55], [
         'suerte', 45], ['defensa', 10]], 'maton': [['vida', 130], ['suerte', 12], ['defensa', 5]]}
     eleccion = input(
-        'que clase deseas elegir \naventurero\nsaqueador\nluchador\n'.title())
+        'que clase deseas elegir \naventurero\nsaqueador\nmaton\n'.title())
     tm.sleep(2)
     if eleccion in clases:
         for t in clases[eleccion]:
@@ -198,7 +253,7 @@ while True:
         continue
 
 
-personaje = Humano(clase[0][1], 8, clase[1][1], clase[2][1], {}, {})
+personaje = Humano(clase[0][1], 8, clase[1][1], clase[2][1], {}, {}, {}, 0, 0)
 ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado\n')
 if ar == '1':
     personaje.inventario(arma={'cuchilla oxidada': 15})
@@ -216,7 +271,7 @@ else:
 
 rondas = 0
 pr = 0
-sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n'.title())
+sitio = input('donde deseas ir \nfosa\nciudad\ncloaca\n')
 if sitio == 'fosa':
     while True:
         print('Estas caminando')
@@ -246,9 +301,11 @@ if sitio == 'fosa':
                             else:
                                 pass
                     else:
+                        if 'sangrado' in personaje.estado:
+                            print('Encontraste 220 de experienca')
+                            personaje.exp += 220
                         print('te mordio una rata')
-                        print('te hizo 10 de ataque')
-                        personaje.golpe(10)
+                        personaje.estados({'sangrado': 3})
                         break
 
                 else:
@@ -260,19 +317,25 @@ if sitio == 'fosa':
             while True:
                 if pr % 2 == 0:
                     pelea = input(
-                        'Empieza el ataque, que elijes?\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n')
+                        'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n6.subir_nivel ')
                     if pelea == '1':
                         at = personaje.atacar()
                         tm.sleep(1)
                         vagur.golpe_ataque(at)
                         print(f'quitaste un total de {at}')
+                        personaje.estados()
                         tm.sleep(1.5)
                         if vagur.vida < 1:
-                            print('ganaste')
+                            print('GANASTE')
+                            print('obtuviste 50 de experiencia')
+                            personaje.exp += 50
+                            tm.sleep(2)
                             vagur.regenerar()
+                            rondas = 0
 
                             break
                         pr += 1
+
                     elif pelea == '2':
                         personaje.ver_stats()
                     elif pelea == '3':
@@ -281,6 +344,8 @@ if sitio == 'fosa':
                         vagur.ver_estadisticas_enemigas()
                     elif pelea == '5':
                         personaje.habilidades()
+                    elif pelea == '6':
+                        personaje.subir_nivel()
 
                 else:
                     at_enemigo = vagur.ataque()
@@ -290,8 +355,55 @@ if sitio == 'fosa':
                     rondas += 1
                     vagur.rondas(rondas)
         elif opcion1 == 3:
-            if suertes(personaje.suerte) == 'suerte':
-                print('aprendiste una habilidad SED CARMESI')
-                personaje.habilidades(hab={'sed carmesi': (
-                    'O te encaminas en la oscuridad\nO REY CARMESI DAME DE TU SANGRE', 'curar', '30', 'SED CARMESI')}, name='SED CARMESI')
+            if 'sed carmesi' not in personaje.habilidad:
+                if suertes(personaje.suerte) == 'suerte':
+                    print('aprendiste una habilidad SED CARMESI')
+                    personaje.habilidades(hab={'sed carmesi': (
+                        'O te encaminas en la oscuridad\nO REY CARMESI DAME DE TU SANGRE', 'curar', '30', 'SED CARMESI')}, name='SED CARMESI')
+                    tm.sleep(4)
+                else:
+                    print('te chupo un gusarapo')
+                    personaje.estados({'mordedura verde': 5})
+            else:
+                while True:
+                    if pr % 2 == 0:
+                        print(f'te encontraste con {titan.nombre}')
+                        pelea = input(
+                            'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n6.subir_nivel ')
+                        if pelea == '1':
+                            at = personaje.atacar()
+                            tm.sleep(1)
+                            titan.golpe_ataque(at)
+                            print(f'quitaste un total de {at}')
+                            tm.sleep(1.5)
+                            personaje.estados()
+                            if titan.vida < 1:
+                                print('GANASTE')
+                                tm.sleep(2)
+                                print('Ganaste 120 de exp')
+                                personaje.exp += 120
+                                tm.sleep(2)
+                                titan.regenerar()
+                                rondas = 0
 
+                                break
+                            pr += 1
+
+                        elif pelea == '2':
+                            personaje.ver_stats()
+                        elif pelea == '3':
+                            personaje.agarrar_arma()
+                        elif pelea == '4':
+                            titan.ver_estadisticas_enemigas()
+                        elif pelea == '5':
+                            personaje.habilidades()
+                        elif pelea == '6':
+                            personaje.subir_nivel()
+
+                    else:
+                        at_enemigo = titan.ataque()
+                        personaje.golpe(at_enemigo)
+                        personaje.salud()
+                        pr += 1
+                        rondas += 1
+                        titan.rondas(rondas)
