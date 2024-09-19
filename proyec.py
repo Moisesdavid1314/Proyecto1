@@ -216,7 +216,7 @@ while True:
         e = input(f'estas seguro que deseas llamarlo {nombre}: ')
         if e == 'si':
             nombre_personaje = nombre
-            print('bien ahora empieza tu LEYENDA')
+            print('Bien ahora empieza tu LEYENDA')
             tm.sleep(3)
             break
         else:
