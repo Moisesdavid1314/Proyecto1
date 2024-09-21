@@ -78,11 +78,11 @@ class enemigos:
         if suertes(50) == 'suerte':
             if suertes(25) == 'suerte':
                 if suertes(5) == 'suerte' and self.nombre == 'titan macizo con pampel cagao de lo adove nivel 3':
-                    return {'la AVASALLADORA': 50}
+                    return {'la AVASALLADORA': 80}
                 else:
                     ws = rd.randrange(1, 4)
-                    loot1 = [[1, {'espada aniquiladora': 25}], [
-                        2, {'destruye anos': 25}], [3, {'abanico filoso': 29.5}]]
+                    loot1 = [[1, {'espada aniquiladora': 55}], [
+                        2, {'destruye anos': 62}], [3, {'abanico filoso': 69.5}]]
                 for t, s in loot1:
                     if t == ws:
                         print(f'te solto {s}')
@@ -91,8 +91,8 @@ class enemigos:
 
             else:
                 ws = rd.randrange(1, 4)
-                loot1 = [[1, {'espada mojonica': 10}], [
-                    2, {'lazo con olor a culo': 19}], [3, {'lanza despellejaora': 19.5}]]
+                loot1 = [[1, {'espada mojonica': 35}], [
+                    2, {'lazo con olor a culo': 37}], [3, {'lanza despellejaora': 40}]]
                 for t, s in loot1:
                     if t == ws:
                         print(f'te solto {s}')
@@ -125,7 +125,7 @@ def suertes(x):
 
 
 class Humano:
-    def __init__(self, vida, ataque, suerte, defensa, mochila, habilidad, estados, experiencia, sani, mana, lim, utensilios):
+    def __init__(self, vida, ataque, suerte, defensa, mochila, habilidad, estados, experiencia, sani, mana, lim, utensilios, vida_max):
         self.vida = vida
         self.ataque = ataque
         self.suerte = suerte
@@ -138,12 +138,13 @@ class Humano:
         self.mana = mana
         self.lim = lim
         self.ute = utensilios
+        self.maxv = vida_max
 
     def subir_nivel(self):
         while True:
             if self.exp > 99:
                 nivel = input(
-                    'que estadisticas deseas subir\n1.Suerte + 5\n2.Armadura + 1\nLimite Mana:+20\n')
+                    'que estadisticas deseas subir\n1.Suerte + 5\n2.Armadura + 1\n3.Limite Mana:+20\n4.Limite Vida + 10\n')
                 tm.sleep(1)
                 if nivel == '1':
                     self.suerte += 5
@@ -158,7 +159,11 @@ class Humano:
                     self.lim = self.lim+20
                     self.exp -= 100
                     print(f'tu limite de mana aumento a {self.lim}')
-                tm.sleep(3)
+                    tm.sleep(3)
+                elif nivel == "4":
+                    self.max_vida += 10
+                    self.exp -= 100
+                    print(f"Tu limite de vida aumento a {self.maxv}")
             else:
                 print(
                     f'no tienes suficiente experiencia para subir nivel nesesitas un minimo de 100 tienes {self.exp}\n')
@@ -168,7 +173,7 @@ class Humano:
     def ver_stats(self):
         print('STADISTICAS')
         print(
-            f'************\nVida:{self.vida}\nAtaque:{self.ataque}\nSuerte:{self.suerte}\nDefensa:{self.defensa}\nExperiencia:{self.exp}\nEstados:{self.estado}\nMana:{self.mana}')
+            f'************\nVida: {self.vida}\nAtaque: {self.ataque}\nSuerte:{self.suerte}\nDefensa: {self.defensa}\nExperiencia: {self.exp}\nEstados:{self.estado}\nMana: {self.mana}\nVida Maxima: {self.maxv}')
         print('**************\n')
         tm.sleep(5.5)
 
@@ -328,6 +333,7 @@ class Humano:
                     if str(s) == eleccion:
                         if 'pocion' in p:
                             self.vida += self.ute[p]
+                            personaje.max_vida()
                             print(f'la {p} te ha curado {self.ute[p]}\n')
                             t = self.ute.pop(p)
                             print(f'elemento eliminado {t}')
@@ -337,10 +343,15 @@ class Humano:
                             t=self.estado.popitem()
                             print(f'el antidoto curo {t}')
                             self.ute.pop(p)
-                            tm.sleep(2.5)
+                            tm.sleep(1.5)
                             break
                     else:
                         print('no valido')
+    def max_vida(self):
+        i = self.maxv
+        if self.vida > self.maxv:
+            self.vida = self.maxv
+            print(f"Alcanzaste el maximo de vida {self.vida}")
 
 
 nombre_personaje = None
@@ -390,20 +401,20 @@ while True:
 
 
 personaje = Humano(clase[0][1], 8, clase[1][1],
-                   clase[2][1], {}, {}, {}, 0, 0, 50, 100, {'pocion de vida': 50})
+                   clase[2][1], {}, {}, {}, 0, 0, 50, 100, {'pocion de vida': 50}, clase[0][1])
 ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado\n')
 if ar == '1':
-    personaje.inventario(arma={'cuchilla oxidada': 15})
+    personaje.inventario(arma={'cuchilla oxidada': 24})
     tm.sleep(1)
 elif ar == '2':
-    personaje.inventario(arma={'maza con palo podrido': 11})
+    personaje.inventario(arma={'maza con palo podrido': 24})
     tm.sleep(1)
 elif ar == '3':
-    personaje.inventario(arma={'papel cagado': 9})
+    personaje.inventario(arma={'papel cagado': 24})
     tm.sleep(1)
 else:
     print('al no elegir correctamente pues corriste como hembra y te encontraste una navaja doblada')
-    personaje.inventario(arma={'navaja doblada': 8})
+    personaje.inventario(arma={'navaja doblada': 5})
     tm.sleep(1)
 
 rondas = 0
@@ -425,14 +436,14 @@ if sitio == 'fosa':
                         if 'espada tula' not in personaje.mochila:
                             print('CONSEGUISTE ESPADA TULA')
                             tm.sleep(1.5)
-                            personaje.inventario(arma={'espada tula': 18})
+                            personaje.inventario(arma={'espada tula': 34})
                             tm.sleep(1)
                             break
                         else:
                             if 'pico acero' not in personaje.mochila:
                                 print('felicidades conseguiste picoacero')
                                 tm.sleep(1)
-                                personaje.inventario(arma={'pico acero': 22})
+                                personaje.inventario(arma={'pico acero': 36})
                                 tm.sleep(1)
                                 break
                             else:
@@ -470,6 +481,8 @@ if sitio == 'fosa':
                         if vagur.vida < 1:
                             print('GANASTE\n')
                             print('obtuviste 50 de experiencia\n')
+                            personaje.vida += 40
+                            personaje.max_vida()
                             personaje.exp += 50
                             x = vagur.loot()
                             personaje.inventario(x)
@@ -528,6 +541,8 @@ if sitio == 'fosa':
                             if titan.vida < 1:
                                 print('GANASTE')
                                 tm.sleep(1)
+                                personaje.vida += 40
+                                personaje.max_vida() 
                                 print('Ganaste 120 de exp')
                                 personaje.exp += 120
                                 tm.sleep(1)
