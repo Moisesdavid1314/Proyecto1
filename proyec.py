@@ -77,12 +77,24 @@ class enemigos:
             if suertes(5) == 'suerte' and self.nombre == 'titan macizo con pampel cagao de lo adove nivel 3':
                 return {'la AVASALLADORA': 50}
             else:
-                loot1 = {'espada de plata': 21,
-                         'machete salvaje': 25, 'espada tactica': 31}
-                return rd.choice(loot1)
-        else:
-            return 'Bien'
+                ws = rd.randrange(1, 4)
+                loot1 = [[1, {'espada aniquiladora': 25}], [
+                    2, {'destruye anos': 25}], [3, {'abanico filoso': 29.5}]]
+            for t, s in loot1:
+                if t == ws:
+                    print(f'te solto {s}')
+                    personaje.inventario(arma=s)
+                    break
 
+        else:
+            ws = rd.randrange(1, 4)
+            loot1 = [[1, {'espada mojonica': 10}], [
+                2, {'lazo con olor a culo': 19}], [3, {'lanza despellejaora': 19.5}]]
+            for t, s in loot1:
+                if t == ws:
+                    print(f'te solto {s}')
+                    personaje.inventario(arma=s)
+                    break
 
 
 titan = enemigos(
@@ -159,41 +171,49 @@ class Humano:
     def inventario(self, arma=None):
         if arma:
             self.mochila.update(arma)
-            print(f'ok obtuviste {self.mochila}')
+            print(f'ok tu inventario ahora esta  {self.mochila}')
             tm.sleep(2)
         else:
             print(self.mochila)
             tm.sleep(2.5)
 
     def agarrar_arma(self):
-        while True:
-            d = self.mochila
-            agarrar = input('que arma deseas agarrar: '.title())
-            if agarrar in d:
-                self.ataque = d[agarrar]
+        print('************************')
+        print('que arma deseas agarrar'.title())
+        listado = []
+        for s, t in enumerate(self.mochila):
+            print(f'{s}.{t}')
+            listado.append([s, t])
+        equipo = int(input('elije el arma: '))
+        for l, s in listado:
+            if equipo == l:
+                self.ataque = self.mochila[s]
+                print(f'arma {s} equipada')
+                print(f'tu ataque ahora es {self.ataque}')
                 break
-            else:
-                print('dicho arma no esta\n')
-                tm.sleep(2.2)
-                print(personaje.inventario())
-                tm.sleep(2.5)
-                continue
-        print('arma equipada con exito')
-        tm.sleep(4)
-        return f'{agarrar} equipado con exito y su ataque es {d[agarrar]}\n'
+        else:
+            print(f'arma {equipo} no encontrado')
+            return personaje.agarrar_arma()
 
     def salud(self):
         print(f'te queda {self.vida} de vida ')
         tm.sleep(2)
 
     def golpe(self, golpe):
-        golpe -= self.defensa
-        self.vida -= golpe
-        if self.vida < 1:
-            raise print('perdiste')
-        else:
-            print(f'te hicieron {golpe} de daño')
-            return golpe
+            if 'raminolis' in personaje.estado:
+                self.defensa -= 2
+                print('la defensa bajo en 2 por la infeccion de raminolis')
+                tm.sleep(1.5)
+            golpe -= self.defensa
+            self.vida -= golpe
+            if self.vida < 1:
+                print('PERDISTE')
+                tm.sleep(2)
+                raise print('GAME OVER')
+
+            else:
+                print(f'te hicieron {golpe} de daño')
+                return golpe
 
     def habilidades(self, hab=None, name=None):
         while True:
@@ -253,7 +273,11 @@ class Humano:
                     tm.sleep(2)
                 self.sanidad += 1
                 if self.sanidad == 3:
-                    print(self.estado.popitem())
+                    d = (self.estado.popitem())
+                    if 'raminolis' in d:
+                        print('tu defensa vuelve a la normalidad')
+                        self.defensa += 6
+                    print(f'el estado {d}')
                     print('ha desaparecido\n')
                     tm.sleep(2)
                     self.sanidad -= 3
@@ -314,6 +338,7 @@ while True:
 
 personaje = Humano(clase[0][1], 8, clase[1][1],
                    clase[2][1], {'maza': 200}, {}, {}, 0, 0, 50, 100)
+personaje.vida -= 100
 ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado\n')
 if ar == '1':
     personaje.inventario(arma={'cuchilla oxidada': 15})
@@ -362,11 +387,14 @@ if sitio == 'fosa':
                                 pass
                     else:
                         if 'sangrado' in personaje.estado:
-                            print('Encontraste 220 de experienca')
-                            personaje.exp += 220
-                        print('te mordio una rata')
-                        personaje.estados({'sangrado': 3})
-                        break
+                            print('gusano come nalgas te infecto de raminolis')
+                            personaje.estados(est={'raminolis': 8})
+
+                        else:
+                            print('te mordio una rata')
+                            personaje.estados(est={'sangrado': 3})
+                            tm.sleep(1.5)
+                            break
 
                 else:
                     print('ok te diste media vuelva')
@@ -392,7 +420,6 @@ if sitio == 'fosa':
                             print('obtuviste 50 de experiencia\n')
                             personaje.exp += 50
                             x = vagur.loot()
-                            print(f'el enemigo te solto {x}')
                             personaje.inventario(x)
                             tm.sleep(2)
                             vagur.regenerar()
@@ -428,7 +455,7 @@ if sitio == 'fosa':
                     tm.sleep(4)
                 else:
                     print('te chupo un gusarapo')
-                    personaje.estados({'mordedura verde': 5})
+                    personaje.estados(est={'mordedura verde': 5})
             else:
                 titan.regenerar('titan macizo con pampel cagao de lo adove')
                 print(f'te encontraste con {titan.nombre}')
