@@ -57,6 +57,7 @@ class enemigos:
                     self.nombre += ' nivel 2'
                     self.vida = 125
             else:
+                self.nombre = 'Vagur macizo'
                 self.vida = 95
         elif n == 'titan macizo con pampel cagao de lo adove':
             if suertes(25) == 'suerte':
@@ -69,31 +70,42 @@ class enemigos:
                     self.vida = 145
                     self.atack = 38
             else:
+                self.nombre = 'titan macizo con pampel cagao de lo adove'
                 self.vida = 110
                 self.atack = 35
 
     def loot(self):
-        if suertes(25) == 'suerte':
-            if suertes(5) == 'suerte' and self.nombre == 'titan macizo con pampel cagao de lo adove nivel 3':
-                return {'la AVASALLADORA': 50}
+        if suertes(50) == 'suerte':
+            if suertes(25) == 'suerte':
+                if suertes(5) == 'suerte' and self.nombre == 'titan macizo con pampel cagao de lo adove nivel 3':
+                    return {'la AVASALLADORA': 50}
+                else:
+                    ws = rd.randrange(1, 4)
+                    loot1 = [[1, {'espada aniquiladora': 25}], [
+                        2, {'destruye anos': 25}], [3, {'abanico filoso': 29.5}]]
+                for t, s in loot1:
+                    if t == ws:
+                        print(f'te solto {s}')
+                        personaje.inventario(arma=s)
+                        break
+
             else:
                 ws = rd.randrange(1, 4)
-                loot1 = [[1, {'espada aniquiladora': 25}], [
-                    2, {'destruye anos': 25}], [3, {'abanico filoso': 29.5}]]
-            for t, s in loot1:
-                if t == ws:
-                    print(f'te solto {s}')
-                    personaje.inventario(arma=s)
-                    break
-
+                loot1 = [[1, {'espada mojonica': 10}], [
+                    2, {'lazo con olor a culo': 19}], [3, {'lanza despellejaora': 19.5}]]
+                for t, s in loot1:
+                    if t == ws:
+                        print(f'te solto {s}')
+                        personaje.inventario(arma=s)
+                        break
         else:
             ws = rd.randrange(1, 4)
-            loot1 = [[1, {'espada mojonica': 10}], [
-                2, {'lazo con olor a culo': 19}], [3, {'lanza despellejaora': 19.5}]]
+            loot1 = [[1, {'pocion de vida normal': 80}], [
+                2, {'pocion de vida mayor': 110}], [3, {'antidoto': 'cura'}]]
             for t, s in loot1:
                 if t == ws:
                     print(f'te solto {s}')
-                    personaje.inventario(arma=s)
+                    personaje.utensilios(ute=s)
                     break
 
 
@@ -113,7 +125,7 @@ def suertes(x):
 
 
 class Humano:
-    def __init__(self, vida, ataque, suerte, defensa, mochila, habilidad, estados, experiencia, sani, mana, lim):
+    def __init__(self, vida, ataque, suerte, defensa, mochila, habilidad, estados, experiencia, sani, mana, lim, utensilios):
         self.vida = vida
         self.ataque = ataque
         self.suerte = suerte
@@ -125,6 +137,7 @@ class Humano:
         self.sanidad = sani
         self.mana = mana
         self.lim = lim
+        self.ute = utensilios
 
     def subir_nivel(self):
         while True:
@@ -189,7 +202,8 @@ class Humano:
             if equipo == l:
                 self.ataque = self.mochila[s]
                 print(f'arma {s} equipada')
-                print(f'tu ataque ahora es {self.ataque}')
+                print(f'tu ataque ahora es {self.ataque}\n')
+                tm.sleep(3)
                 break
         else:
             print(f'arma {equipo} no encontrado')
@@ -200,20 +214,20 @@ class Humano:
         tm.sleep(2)
 
     def golpe(self, golpe):
-            if 'raminolis' in personaje.estado:
-                self.defensa -= 2
-                print('la defensa bajo en 2 por la infeccion de raminolis')
-                tm.sleep(1.5)
-            golpe -= self.defensa
-            self.vida -= golpe
-            if self.vida < 1:
-                print('PERDISTE')
-                tm.sleep(2)
-                raise print('GAME OVER')
+        if 'raminolis' in personaje.estado:
+            self.defensa -= 2
+            print('la defensa bajo en 2 por la infeccion de raminolis')
+            tm.sleep(1.5)
+        golpe -= self.defensa
+        self.vida -= golpe
+        if self.vida < 1:
+            print('PERDISTE')
+            tm.sleep(2)
+            raise print('GAME OVER')
 
-            else:
-                print(f'te hicieron {golpe} de daño')
-                return golpe
+        else:
+            print(f'te hicieron {golpe} de daño')
+            return golpe
 
     def habilidades(self, hab=None, name=None):
         while True:
@@ -275,7 +289,7 @@ class Humano:
                 if self.sanidad == 3:
                     d = (self.estado.popitem())
                     if 'raminolis' in d:
-                        print('tu defensa vuelve a la normalidad')
+                        print('parte de tu defensa vuelve a la normalidad')
                         self.defensa += 6
                     print(f'el estado {d}')
                     print('ha desaparecido\n')
@@ -288,6 +302,45 @@ class Humano:
             self.mana = self.lim
         print(f'tu mana aumento a {self.mana}/{self.lim}')
         tm.sleep(3)
+
+    def utensilios(self, ute=None):
+        if ute:
+            self.ute.update(ute)
+            print(f'{ute} añadido a la bolsa de utensilios\n')
+            tm.sleep(2.5)
+        else:
+            while True:
+                utensilios_temp = []
+                for r, t in enumerate(self.ute, start=1):
+                    print(f'{r}.{t}')
+                    utensilios_temp.append((r, t))
+                eleccion = (input(
+                    'cual deseas utilizar  \nVer:. si desesa ver todos los objetos\nvolver si quiere regresar : '))
+                if eleccion == 'ver':
+                    print(f'UTENSILIOS: {self.ute}')
+                    tm.sleep(1.5)
+                    continue
+                elif eleccion == 'regresar':
+                    print('regresando')
+                    tm.sleep(2)
+                    break
+                for s, p in utensilios_temp:
+                    if str(s) == eleccion:
+                        if 'pocion' in p:
+                            self.vida += self.ute[p]
+                            print(f'la {p} te ha curado {self.ute[p]}\n')
+                            t = self.ute.pop(p)
+                            print(f'elemento eliminado {t}')
+                            tm.sleep(2)
+                            break
+                        elif 'antidoto' in p:
+                            t=self.estado.popitem()
+                            print(f'el antidoto curo {t}')
+                            self.ute.pop(p)
+                            tm.sleep(2.5)
+                            break
+                    else:
+                        print('no valido')
 
 
 nombre_personaje = None
@@ -337,7 +390,7 @@ while True:
 
 
 personaje = Humano(clase[0][1], 8, clase[1][1],
-                   clase[2][1], {}, {}, {}, 0, 0, 50, 100)
+                   clase[2][1], {}, {}, {}, 0, 0, 50, 100, {'pocion de vida': 50})
 ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado\n')
 if ar == '1':
     personaje.inventario(arma={'cuchilla oxidada': 15})
@@ -405,7 +458,7 @@ if sitio == 'fosa':
             while True:
                 if pr % 2 == 0:
                     pelea = input(
-                        'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n6.subir_nivel\n\n\n ')
+                        'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n6.subir_nivel\n7.Utensilios\n\n ')
                     if pelea == '1':
                         at = personaje.atacar()
                         tm.sleep(1)
@@ -437,7 +490,8 @@ if sitio == 'fosa':
                         personaje.habilidades()
                     elif pelea == '6':
                         personaje.subir_nivel()
-
+                    elif pelea == '7':
+                        personaje.utensilios()
                 else:
                     at_enemigo = vagur.ataque()
                     personaje.golpe(at_enemigo)
@@ -461,7 +515,7 @@ if sitio == 'fosa':
                 while True:
                     if pr % 2 == 0:
                         pelea = input(
-                            'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n6.subir_nivel ')
+                            'empieza el ataque que elijes\n1.atacar\n2.ver tu estado\n3.equipar arma\n4.ver enemigo\n5.Usar habilidad\n6.subir_nivel\n7.utensilios ')
                         if pelea == '1':
                             at = personaje.atacar()
                             tm.sleep(1)
@@ -496,6 +550,8 @@ if sitio == 'fosa':
                             personaje.habilidades()
                         elif pelea == '6':
                             personaje.subir_nivel()
+                        elif pelea == '7':
+                            personaje.utensilios()
 
                     else:
                         at_enemigo = titan.ataque()
