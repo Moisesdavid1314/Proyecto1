@@ -144,7 +144,7 @@ class Humano:
             if self.exp > 99:
                 nivel = input(
                     'que estadisticas deseas subir\n1.Suerte + 5\n2.Armadura + 1\nLimite Mana:+20\n')
-                tm.sleep(2)
+                tm.sleep(1)
                 if nivel == '1':
                     self.suerte += 5
                     self.exp -= 100
@@ -162,7 +162,7 @@ class Humano:
             else:
                 print(
                     f'no tienes suficiente experiencia para subir nivel nesesitas un minimo de 100 tienes {self.exp}\n')
-                tm.sleep(2)
+                tm.sleep(1)
                 break
 
     def ver_stats(self):
@@ -185,7 +185,7 @@ class Humano:
         if arma:
             self.mochila.update(arma)
             print(f'ok tu inventario ahora esta  {self.mochila}')
-            tm.sleep(2)
+            tm.sleep(1)
         else:
             print(self.mochila)
             tm.sleep(2.5)
@@ -211,7 +211,7 @@ class Humano:
 
     def salud(self):
         print(f'te queda {self.vida} de vida ')
-        tm.sleep(2)
+        tm.sleep(1)
 
     def golpe(self, golpe):
         if 'raminolis' in personaje.estado:
@@ -222,7 +222,7 @@ class Humano:
         self.vida -= golpe
         if self.vida < 1:
             print('PERDISTE')
-            tm.sleep(2)
+            tm.sleep(1)
             raise print('GAME OVER')
 
         else:
@@ -264,27 +264,27 @@ class Humano:
 
                     else:
                         print(f'la habilidad {elec2} no existe')
-                        tm.sleep(2)
+                        tm.sleep(1)
                         break
         return print('\n')
 
     def curar(self, x):
         self.vida += x
         print(f'te curaste {x} de vida')
-        tm.sleep(2)
+        tm.sleep(1)
 
     def estados(self, est=None):
         if est:
             self.estado.update(est)
             for t in est:
                 print(f'contuviste {t}')
-                tm.sleep(2)
+                tm.sleep(1)
         else:
             if self.estado:
                 for s, p in self.estado.items():
                     print(f'{s} te infligio un total de {p} daño \n')
                     self.vida -= p
-                    tm.sleep(2)
+                    tm.sleep(1)
                 self.sanidad += 1
                 if self.sanidad == 3:
                     d = (self.estado.popitem())
@@ -293,7 +293,7 @@ class Humano:
                         self.defensa += 6
                     print(f'el estado {d}')
                     print('ha desaparecido\n')
-                    tm.sleep(2)
+                    tm.sleep(1)
                     self.sanidad -= 3
 
     def regenerar_mana(self):
@@ -322,7 +322,7 @@ class Humano:
                     continue
                 elif eleccion == 'regresar':
                     print('regresando')
-                    tm.sleep(2)
+                    tm.sleep(1)
                     break
                 for s, p in utensilios_temp:
                     if str(s) == eleccion:
@@ -331,7 +331,7 @@ class Humano:
                             print(f'la {p} te ha curado {self.ute[p]}\n')
                             t = self.ute.pop(p)
                             print(f'elemento eliminado {t}')
-                            tm.sleep(2)
+                            tm.sleep(1)
                             break
                         elif 'antidoto' in p:
                             t=self.estado.popitem()
@@ -347,7 +347,7 @@ nombre_personaje = None
 print('un humano despierta su concienta quebrada y su nombre borrado\nquiere dar comienzo a una aventura y se llamara')
 while True:
     nombre = input('como se llamara este aventurero: ')
-    tm.sleep(2)
+    tm.sleep(1)
     if not nombre.isdigit():
         e = input(f'estas seguro que deseas llamarlo {nombre}: ')
         if e == 'si':
@@ -369,7 +369,7 @@ while True:
         'suerte', 45], ['defensa', 10]], 'maton': [['vida', 130], ['suerte', 12], ['defensa', 5]]}
     eleccion = input(
         'que clase deseas elegir \naventurero\nsaqueador\nmaton\n'.title())
-    tm.sleep(2)
+    tm.sleep(1)
     if eleccion in clases:
         for t in clases[eleccion]:
             print(t)
@@ -381,11 +381,11 @@ while True:
             break
         else:
             print('ok')
-            tm.sleep(2)
+            tm.sleep(1)
             continue
     else:
         print('clase no valida')
-        tm.sleep(2)
+        tm.sleep(1)
         continue
 
 
@@ -394,17 +394,17 @@ personaje = Humano(clase[0][1], 8, clase[1][1],
 ar = input('con cual arma deseas empezar \n1.cuchillo oxidado\n2.maza con palo podrido\n3.papel de bano cagado\n')
 if ar == '1':
     personaje.inventario(arma={'cuchilla oxidada': 15})
-    tm.sleep(2)
+    tm.sleep(1)
 elif ar == '2':
     personaje.inventario(arma={'maza con palo podrido': 11})
-    tm.sleep(2)
+    tm.sleep(1)
 elif ar == '3':
     personaje.inventario(arma={'papel cagado': 9})
-    tm.sleep(2)
+    tm.sleep(1)
 else:
     print('al no elegir correctamente pues corriste como hembra y te encontraste una navaja doblada')
     personaje.inventario(arma={'navaja doblada': 8})
-    tm.sleep(2)
+    tm.sleep(1)
 
 rondas = 0
 pr = 0
@@ -421,7 +421,7 @@ if sitio == 'fosa':
                 if e1 == 'si':
                     if suertes(personaje.suerte) == 'suerte':
                         print('Bien tuviste un golpe de suerte ')
-                        tm.sleep(2)
+                        tm.sleep(1)
                         if 'espada tula' not in personaje.mochila:
                             print('CONSEGUISTE ESPADA TULA')
                             tm.sleep(1.5)
@@ -431,9 +431,9 @@ if sitio == 'fosa':
                         else:
                             if 'pico acero' not in personaje.mochila:
                                 print('felicidades conseguiste picoacero')
-                                tm.sleep(2)
+                                tm.sleep(1)
                                 personaje.inventario(arma={'pico acero': 22})
-                                tm.sleep(2)
+                                tm.sleep(1)
                                 break
                             else:
                                 pass
@@ -473,7 +473,7 @@ if sitio == 'fosa':
                             personaje.exp += 50
                             x = vagur.loot()
                             personaje.inventario(x)
-                            tm.sleep(2)
+                            tm.sleep(1)
                             vagur.regenerar()
                             rondas = 0
 
@@ -527,10 +527,10 @@ if sitio == 'fosa':
                             personaje.regenerar_mana()
                             if titan.vida < 1:
                                 print('GANASTE')
-                                tm.sleep(2)
+                                tm.sleep(1)
                                 print('Ganaste 120 de exp')
                                 personaje.exp += 120
-                                tm.sleep(2)
+                                tm.sleep(1)
                                 y = titan.loot()
                                 print(f'el enemigo te solto {y}')
                                 personaje.inventario(y)
