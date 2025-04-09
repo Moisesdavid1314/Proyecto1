@@ -1,0 +1,10 @@
+
+entrada = input("Coloca 2 nombre y 2 apellido intercalado: ").split(",")
+
+
+
+
+nombre,apellido,nombre2,apellido2 = entrada
+
+
+print(f"nombre: {nombre.capitalize()} apellido {apellido.capitalize()} nombre2: {nombre2.capitalize()}  apellido2 {apellido2.capitalize()}")
