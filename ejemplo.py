@@ -1,0 +1,19 @@
+def calcular(paga_cliente,precio):
+    pago = f" Tu Devolucion es de {paga_cliente-precio}" if paga_cliente > precio else f"PAGO RECHAZADO TE FALTA {precio-paga_cliente} pesos"
+    return pago
+
+
+
+
+def Main():
+    try:
+        print("Bienvenido al Mercado Ingresa el Monto a Pagar")
+        pago = float(input(": "))
+        producto_precio = float(input("ingresa el costo del producto: "))
+        print(calcular(pago,producto_precio))
+    except:
+        print("Solo se Aceptan Numeros")
+
+
+
+Main()
